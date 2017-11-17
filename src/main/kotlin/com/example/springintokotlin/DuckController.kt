@@ -15,9 +15,6 @@ class DuckController(private val duckRepository: DuckRepository) {
     fun getDuckById(@PathVariable id: String) = duckRepository.findById(id)
 
     @GetMapping("/search")
-    fun getDuckByType(@RequestParam type: String?) = if (type == null) {
-        duckRepository.findAll().iterator().next()
-    } else {
-        duckRepository.findByType(type)
-    }
+    fun getDuckByType(@RequestParam type: String?) =
+       type?.let { duckRepository.findByType(it)  } ?: duckRepository.findAll().iterator().next()
 }
